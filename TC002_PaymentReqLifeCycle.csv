@@ -1,0 +1,79 @@
+Step,ObjectName,Description,Action,Input,Condition,Reference
+1,Browser,print the data [<Data>],print,@//Login BC application,,
+2,Execute,,BillingCenter_General:BC_Login,,,
+3,Browser,print the data [<Data>],print,@//Create ACH Acc,,
+4,Execute,,BillingCenter_New Account:BC_NewAccount_ACH,,,
+5,Execute,,BillingCenter_New Account:BC_NewAccount_ExistingCompany,,,
+6,Execute,,BillingCenter_New Account:BC_NewAccount_CreateAccount,,,
+7,Browser,print the data [<Data>],print,@//Create Policy,,
+8,Execute,,BillingCenter_PolicyCreation:BC_CreatePolicy_WithoutContact,,,
+9,Browser,print the data [<Data>],print,@//Open Insured Acc,,
+10,Execute,,BillingCenter_Search:BC_SearchAccountScreen,,,
+11,Execute,,BillingCenter_Search:BC_SearchAccountScreen,@//Navigate to Invoice Screen,,
+12,pane_Invoices,"Wait for [<Object>] to be clickable ",waitForElementToBeVisible,,,GWBC-AccountSummary
+13,pane_Invoices,"Click the [<Object>] ",Click,,,GWBC-AccountSummary
+14,label_Invoices,Wait  for the element [<Object>] to be present,waitForElementToBeVisible,,,GWBC-Invoices
+15,table_InvoiceDate,Enter the value [<Data>] in the Field [<Object>],GWGetWebTableValue,@Planned,BatchJobs:ChangeDate,GWBC-Invoices
+16,Browser,print the data [<Data>],print,@//Move Clock to First Invoice date,,
+17,Browser,Store text provided in [<Data>] into datasheet:columname [<Condition>],GWUpdateTextInDataSheet,@0,BatchJobs:DaytoAdd,
+18,Execute,,BillingCenter_General:BC_SysClockMove,,,
+19,Browser,Wait  for the element [<Object>] to be present,GWUpdateTextInDataSheet,@Invoice,BatchJobs:BatchName,
+20,Execute,,BillingCenter_General:BC_BatchProcess,,,
+21,Execute,,BillingCenter_Search:BC_SearchAccountScreen,,,
+22,Browser,print the data [<Data>],print,@//Naigate to Payment screen,,
+23,link_Payments,"Wait for [<Object>] to be clickable ",waitForElementToBeClickable,,,GWBC-AccountSummary
+24,link_Payments,"Click the [<Object>] ",Click,,,GWBC-AccountSummary
+25,pane_PaymentRequest,"Wait for [<Object>] to be clickable ",waitForElementToBeClickable,,,GWBC-AccountSummary
+26,pane_PaymentRequest,"Click the [<Object>] ",Click,,,GWBC-AccountSummary
+27,elm_Status_rowN,Set object [<Object>] property  as [<Data>] at runtime,setObjectProperty,@1,"#id",GWBC-PaymentRequest
+28,elm_Status_rowN,Wait  for the element [<Object>] to be present,waitForElementToBePresent,,,GWBC-PaymentRequest
+29,elm_Status_rowN,Assert if [<Object>]'s Text Equals [<Data>],assertElementTextEquals,@Created,,GWBC-PaymentRequest
+30,Browser,print the data [<Data>],print,@//Run Payment Request Batch,,
+31,Browser,Wait  for the element [<Object>] to be present,GWUpdateTextInDataSheet,@Payment Request,BatchJobs:BatchName,
+32,Execute,,BillingCenter_General:BC_BatchProcess,,,
+33,Execute,,BillingCenter_Search:BC_SearchAccountScreen,,,
+34,Browser,print the data [<Data>],print,@//Naigate to Payment screen,,
+35,link_Payments,"Wait for [<Object>] to be clickable ",waitForElementToBeClickable,,,GWBC-AccountSummary
+36,link_Payments,"Click the [<Object>] ",Click,,,GWBC-AccountSummary
+37,pane_PaymentRequest,"Wait for [<Object>] to be clickable ",waitForElementToBeClickable,,,GWBC-AccountSummary
+38,pane_PaymentRequest,"Click the [<Object>] ",Click,,,GWBC-AccountSummary
+39,elm_Status_rowN,Set object [<Object>] property  as [<Data>] at runtime,setObjectProperty,@1,"#id",GWBC-PaymentRequest
+40,elm_Status_rowN,Wait  for the element [<Object>] to be present,waitForElementToBePresent,,,GWBC-PaymentRequest
+41,elm_Status_rowN,Assert if [<Object>]'s Text Equals [<Data>],assertElementTextEquals,@Requested,,GWBC-PaymentRequest
+42,table_FixedDate,Enter the value [<Data>] in the Field [<Object>],GWGetWebTableValue,@Requested,BatchJobs:ChangeDate,GWBC-PaymentRequest
+43,Browser,print the data [<Data>],print,@//Move Clock to Fixed Date,,
+44,Browser,Store text provided in [<Data>] into datasheet:columname [<Condition>],GWUpdateTextInDataSheet,@0,BatchJobs:DaytoAdd,
+45,Execute,,BillingCenter_General:BC_SysClockMove,,,
+46,Browser,Wait  for the element [<Object>] to be present,GWUpdateTextInDataSheet,@Payment Request,BatchJobs:BatchName,
+47,Execute,,BillingCenter_General:BC_BatchProcess,,,
+48,Execute,,BillingCenter_Search:BC_SearchAccountScreen,,,
+49,Browser,print the data [<Data>],print,@//Naigate to Payment screen,,
+50,Execute,,BillingCenter_ScreenNavigation:nav_Payments_PaymentReq,,,
+51,elm_Status_rowN,Set object [<Object>] property  as [<Data>] at runtime,setObjectProperty,@1,"#id",GWBC-PaymentRequest
+52,elm_Status_rowN,Wait  for the element [<Object>] to be present,waitForElementToBePresent,,,GWBC-PaymentRequest
+53,elm_Status_rowN,Assert if [<Object>]'s Text Equals [<Data>],assertElementTextEquals,@Fixed,,GWBC-PaymentRequest
+54,table_DraftDate,Enter the value [<Data>] in the Field [<Object>],GWGetWebTableValue,@Fixed,BatchJobs:ChangeDate,GWBC-PaymentRequest
+55,Browser,print the data [<Data>],print,@//Move Clock to Draft Date,,
+56,Browser,Store text provided in [<Data>] into datasheet:columname [<Condition>],GWUpdateTextInDataSheet,@0,BatchJobs:DaytoAdd,
+57,Execute,,BillingCenter_General:BC_SysClockMove,,,
+58,Browser,Wait  for the element [<Object>] to be present,GWUpdateTextInDataSheet,@Payment Request,BatchJobs:BatchName,
+59,Execute,,BillingCenter_General:BC_BatchProcess,,,
+60,Execute,,BillingCenter_Search:BC_SearchAccountScreen,,,
+61,Browser,print the data [<Data>],print,@//Naigate to Payment screen,,
+62,Execute,,BillingCenter_ScreenNavigation:nav_Payments_PaymentReq,,,
+63,elm_Status_rowN,Set object [<Object>] property  as [<Data>] at runtime,setObjectProperty,@1,"#id",GWBC-PaymentRequest
+64,elm_Status_rowN,Wait  for the element [<Object>] to be present,waitForElementToBePresent,,,GWBC-PaymentRequest
+65,elm_Status_rowN,Assert if [<Object>]'s Text Equals [<Data>],assertElementTextEquals,@Drafted,,GWBC-PaymentRequest
+66,table_DueDate,Retrieve value in Table [<Object>] matching [<Data>] and Validate against [<Condition>],GWGetWebTableValue,@Drafted,BatchJobs:ChangeDate,GWBC-PaymentRequest
+67,Browser,Wait for [<Data>] milli seconds,pause,@500,,
+68,Browser,print the data [<Data>],print,@//Move Clock to Due Date,,
+69,Browser,Store text provided in [<Data>] into datasheet:columname [<Condition>],GWUpdateTextInDataSheet,@0,BatchJobs:DaytoAdd,
+70,Execute,,BillingCenter_General:BC_SysClockMove,,,
+71,Browser,Wait  for the element [<Object>] to be present,GWUpdateTextInDataSheet,@Payment Request,BatchJobs:BatchName,
+72,Execute,,BillingCenter_General:BC_BatchProcess,,,
+73,Execute,,BillingCenter_Search:BC_SearchAccountScreen,,,
+74,Browser,Wait for [<Data>] milli seconds,pause,@500,,
+75,Execute,,BillingCenter_ScreenNavigation:nav_Payments_PaymentReq,,,
+76,Browser,Wait for [<Data>] milli seconds,pause,@500,,
+77,table_Status,Retrieve value in Table [<Object>] matching [<Data>] and Validate against [<Condition>],GWGetAndCheckTableValue,BatchJobs:ChangeDate,Closed,GWBC-PaymentRequest
+78,Browser,"Click the [<Object>] ",GWLogOut,,,
